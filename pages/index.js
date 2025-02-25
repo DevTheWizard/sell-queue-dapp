@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { Button, Input } from "@/components/ui";
 
 const CONTRACT_ADDRESS = "0xYourContractAddress"; // Replace with actual contract address
 const ABI = [
@@ -60,32 +59,32 @@ export default function Home() {
   }
 
   return (
-    <div className="p-6">
-      <h1 className="text-xl font-bold">Sell Queue dApp</h1>
+    <div style={{ padding: "20px" }}>
+      <h1>Sell Queue dApp</h1>
       {!account ? (
-        <Button className="mt-4" onClick={connectWallet}>Connect Wallet</Button>
+        <button onClick={connectWallet}>Connect Wallet</button>
       ) : (
         <p>Connected: {account}</p>
       )}
-      <div className="mt-4">
-        <h2 className="text-lg font-semibold">Submit Sell Request</h2>
-        <Input
+      <div>
+        <h2>Submit Sell Request</h2>
+        <input
           type="number"
           placeholder="Enter amount"
           value={sellAmount}
           onChange={(e) => setSellAmount(e.target.value)}
         />
-        <Button className="mt-2" onClick={requestSell}>Request Sell</Button>
+        <button onClick={requestSell}>Request Sell</button>
       </div>
-      <div className="mt-4">
-        <h2 className="text-lg font-semibold">Sell Queue</h2>
+      <div>
+        <h2>Sell Queue</h2>
         <ul>
           {queue.map((wallet, index) => (
             <li key={index}>#{index + 1} - {wallet}</li>
           ))}
         </ul>
       </div>
-      <p className="mt-4">Daily Sell Cap: {dailyLimit} SQT</p>
+      <p>Daily Sell Cap: {dailyLimit} SQT</p>
     </div>
   );
 }
