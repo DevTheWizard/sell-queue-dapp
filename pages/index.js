@@ -50,12 +50,23 @@ export default function Home() {
   }
 
   async function requestSell() {
-    if (!contract || !sellAmount) return;
-    const amount = ethers.utils.parseUnits(sellAmount, 18);
-    const tx = await contract.requestSell(amount);
-    await tx.wait();
-    alert("Sell request submitted!");
-    loadQueue(contract);
+    if (!contract || !sellAmount) {
+      alert("Please connect wallet and enter a valid amount");
+      return;
+    }
+    try {
+      const amount = ethers.utils.parseUnits(sellAmount, 18);
+      console.log("Requesting sell for:", amount.toString());
+      const tx = await contract.requestSell(amount);
+      console.log("Transaction sent:", tx.hash);
+      await tx.wait();
+      console.log("Transaction confirmed");
+      alert("Sell request submitted!");
+      loadQueue(contract);
+    } catch (error) {
+      console.error("Error submitting sell request:", error);
+      alert("Transaction failed: " + (error.message || "Unknown error"));
+    }
   }
 
   return (
